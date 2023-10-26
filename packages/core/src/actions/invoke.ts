@@ -1,7 +1,7 @@
 import isDevelopment from '#is-development';
 import { cloneState } from '../State.ts';
 import { createErrorActorEvent } from '../eventUtils.ts';
-import { ActorStatus, createActor } from '../interpreter.ts';
+import { ProcessingStatus, createActor } from '../interpreter.ts';
 import {
   ActionArgs,
   AnyActorContext,
@@ -104,7 +104,7 @@ function executeInvoke(
   }
 
   actorContext.defer(() => {
-    if (actorRef.status === ActorStatus.Stopped) {
+    if (actorRef._processingStatus === ProcessingStatus.Stopped) {
       return;
     }
     try {

@@ -501,11 +501,13 @@ export class StateMachine<
       TResolvedTypesMeta
     >
   ): void {
-    Object.values(state.children).forEach((child: any) => {
-      if (child.status === 0) {
-        child.start();
+    Object.values(state.children as Record<string, AnyActorRef>).forEach(
+      (child) => {
+        if (child.getSnapshot().status === 'active') {
+          child.start!();
+        }
       }
-    });
+    );
   }
 
   public getStateNodeById(stateId: string): StateNode<TContext, TEvent> {
